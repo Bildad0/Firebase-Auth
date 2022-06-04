@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebaseauthexample/Appservices/auth_service.dart';
+import 'package:firebaseauthexample/Pages/signinpage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'Pages/homepage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,11 +44,12 @@ class Auth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final firebaseUser = context.watch<User>();
-    if (firebaseUser == firebaseUser) {
-      return const Text('Signed in');
+    final firebaseUser = context.watch<User?>();
+    if (firebaseUser != null) {
+      //should return homepage
+      return const HomePage();
     }
-
-    return const Text('Not Signed in');
+    // should return login page
+    return SignInPage();
   }
 }
