@@ -13,29 +13,52 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: [
-        TextField(
-          controller: emailController,
-          decoration: const InputDecoration(
-            labelText: "Email",
-          ),
+      appBar: AppBar(
+        elevation: 0,
+      ),
+      body: Container(
+        color: Colors.blue,
+        child: Column(
+          children: [
+            const Icon(Icons.book_online),
+            const Text('Connect'),
+            SizedBox(
+              height: 300,
+              child: Card(
+                margin: const EdgeInsets.fromLTRB(30, 100, 30, 0),
+                color: Colors.white,
+                child: Column(children: [
+                  TextField(
+                    controller: emailController,
+                    decoration: const InputDecoration(
+                      labelText: "Email",
+                    ),
+                  ),
+                  TextField(
+                    controller: passwordController,
+                    decoration: const InputDecoration(
+                      labelText: "Password",
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<AuthService>().signIn(
+                            email: emailController.text.trim(),
+                            password: passwordController.text.trim(),
+                          );
+                    },
+                    child: const Text("Sign in"),
+                  ),
+                ]),
+              ),
+            ),
+            Expanded(
+                child: GestureDetector(
+              child: const Text("Forgot Password?"),
+            ))
+          ],
         ),
-        TextField(
-          controller: passwordController,
-          decoration: const InputDecoration(
-            labelText: "Password",
-          ),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            context.read<AuthService>().signIn(
-                  email: emailController.text.trim(),
-                  password: passwordController.text.trim(),
-                );
-          },
-          child: const Text("Sign in"),
-        ),
-      ]),
+      ),
     );
   }
 }
