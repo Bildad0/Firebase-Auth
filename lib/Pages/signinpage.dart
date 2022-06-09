@@ -10,6 +10,19 @@ class SignInPage extends StatelessWidget {
 
   SignInPage({Key? key}) : super(key: key);
 
+  String? get _errorText {
+    final mailtext = emailController.text;
+    final passtext = passwordController.text;
+
+    if (mailtext.isEmpty || passtext.isEmpty) {
+      return 'can\'t be empty';
+    }
+    if (passtext.length < 6) {
+      return 'Too short';
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,13 +43,16 @@ class SignInPage extends StatelessWidget {
                 child: Column(children: [
                   TextField(
                     controller: emailController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
+                      errorText: _errorText,
                       labelText: "Email",
                     ),
                   ),
                   TextField(
+                    obscureText: true,
                     controller: passwordController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
+                      errorText: _errorText,
                       labelText: "Password",
                     ),
                   ),
